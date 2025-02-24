@@ -13,4 +13,6 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<Product, UUID> {
     @NonNull
     Page<Product> findAll(@NonNull Pageable pageable);
+
+    Page<Product> findByVendorId(@NonNull Pageable pageable, @NonNull UUID vendor);
 }
