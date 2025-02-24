@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:17.4-alpine
+    container_name: vendor_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: vend123
+      POSTGRES_USER: root
+      POSTGRES_DB: vendor_db
+    ports:
+      - "54320:5432"
+    volumes:
+      - vendor_db_data:/var/lib/postgresql/data
+volumes:
+  vendor_db_data:
