@@ -30,13 +30,13 @@ public class VendorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     VendorFullResponse create(@Valid @RequestBody VendorCreateRequest vendor){
-        return VendorParse.toDTO(vendorService.create(vendor));
+        return VendorParse.toFullDTO(vendorService.create(vendor));
     }
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     VendorFullResponse findById(@PathVariable(value = "id") @NotNull @NotBlank String id){
-        return VendorParse.toDTO(vendorService.findById(id));
+        return VendorParse.toFullDTO(vendorService.findById(id));
     }
 
     @GetMapping
@@ -53,7 +53,7 @@ public class VendorController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     VendorFullResponse update(@Valid @RequestBody VendorUpdateRequest vendor){
-        return VendorParse.toDTO(vendorService.update(vendor));
+        return VendorParse.toFullDTO(vendorService.update(vendor));
     }
 
     @DeleteMapping(value = "/{id}")

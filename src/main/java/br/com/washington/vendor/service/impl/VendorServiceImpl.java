@@ -7,6 +7,7 @@ import br.com.washington.vendor.exception.InvalidUUIDException;
 import br.com.washington.vendor.exception.ObjectIsNullException;
 import br.com.washington.vendor.exception.VendorNotFoundException;
 import br.com.washington.vendor.repositories.VendorRepository;
+import br.com.washington.vendor.service.ProductService;
 import br.com.washington.vendor.service.VendorService;
 import br.com.washington.vendor.util.VendorParse;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class VendorServiceImpl implements VendorService {
+public final class VendorServiceImpl implements VendorService {
 
     private final VendorRepository vendorRepository;
 
