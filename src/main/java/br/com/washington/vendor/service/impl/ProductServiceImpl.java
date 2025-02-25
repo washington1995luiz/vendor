@@ -46,6 +46,12 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByVendorId(pageable, parseUUID(vendorId));
     }
 
+    @Override
+    public void delete(String id) {
+        var product = this.findById(id);
+        productRepository.delete(product);
+    }
+
     private UUID parseUUID(String id) {
         try{
             return UUID.fromString(id);

@@ -36,6 +36,11 @@ public class ProductController {
         return ProductParse.toFullDTO(productService.create(product));
     }
 
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@PathVariable(value = "id") @NotNull @NotBlank String id){
+        productService.delete(id);
+    }
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
