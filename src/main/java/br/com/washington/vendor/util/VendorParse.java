@@ -3,6 +3,7 @@ package br.com.washington.vendor.util;
 import br.com.washington.vendor.dto.request.VendorCreateRequest;
 import br.com.washington.vendor.dto.request.VendorUpdateRequest;
 import br.com.washington.vendor.dto.response.VendorFullResponse;
+import br.com.washington.vendor.dto.response.VendorShortResponse;
 import br.com.washington.vendor.entities.Vendor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedModel;
@@ -32,7 +33,7 @@ public class VendorParse {
         return vendor;
     }
 
-    public static VendorFullResponse toDTO(Vendor vendor){
+    public static VendorFullResponse toFullDTO(Vendor vendor){
         if(Objects.isNull(vendor)){ return null; }
         return new VendorFullResponse(
                 vendor.getId(),
@@ -45,7 +46,15 @@ public class VendorParse {
         );
     }
 
+    public static VendorShortResponse toShortDTO(Vendor vendor){
+        if(Objects.isNull(vendor)){ return null; }
+        return new VendorShortResponse(
+                vendor.getId(),
+                vendor.getName()
+        );
+    }
+
     public static PagedModel<VendorFullResponse> toPagedModel(Page<Vendor> all) {
-       return new PagedModel<>(all.map(VendorParse::toDTO));
+       return new PagedModel<>(all.map(VendorParse::toFullDTO));
     }
 }

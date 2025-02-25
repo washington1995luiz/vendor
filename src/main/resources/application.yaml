@@ -2,17 +2,24 @@ spring:
   application:
     name: vendor
   datasource:
-    url: jdbc:postgresql://localhost:54320/vendor_db?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    url: jdbc:postgresql://localhost:54320/vendor_db?useTimezone=true
     username: root
     password: vend123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: true
 
   jpa:
-    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: none
     hibernate:
+      ddl-auto: none
       jdbc.time_zone: UTC
     show-sql: true
     format_sql: true
 
   flyway:
     enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "metrics"

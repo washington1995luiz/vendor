@@ -2,9 +2,11 @@ package br.com.washington.vendor.entities;
 
 import br.com.washington.vendor.dto.request.VendorCreateRequest;
 import br.com.washington.vendor.dto.request.VendorUpdateRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,4 +41,8 @@ public class Vendor {
 
     @Column(name = "vend_country", length = 50)
     private String country;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products;
 }
