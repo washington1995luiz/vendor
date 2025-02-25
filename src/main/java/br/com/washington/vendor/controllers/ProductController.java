@@ -1,6 +1,7 @@
 package br.com.washington.vendor.controllers;
 
 import br.com.washington.vendor.dto.request.ProductCreateRequest;
+import br.com.washington.vendor.dto.request.ProductUpdateRequest;
 import br.com.washington.vendor.dto.response.ProductFullResponse;
 import br.com.washington.vendor.dto.response.ProductShortResponse;
 import br.com.washington.vendor.entities.Product;
@@ -40,6 +41,12 @@ public class ProductController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(@PathVariable(value = "id") @NotNull @NotBlank String id){
         productService.delete(id);
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    ProductFullResponse update(@RequestBody ProductUpdateRequest product){
+        return ProductParse.toFullDTO(productService.update(product));
     }
 
     @GetMapping(value = "/{id}")

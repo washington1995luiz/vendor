@@ -32,8 +32,7 @@ public final class VendorServiceImpl implements VendorService {
 
     @Override
     public Vendor findById(String id) {
-        UUID uuid = parseUUID(id);
-        return vendorRepository.findById(uuid).orElseThrow(() -> new VendorNotFoundException(id));
+        return vendorRepository.findById(parseUUID(id)).orElseThrow(() -> new VendorNotFoundException(id));
     }
 
     @Override
@@ -44,16 +43,12 @@ public final class VendorServiceImpl implements VendorService {
     @Override
     public Vendor update(VendorUpdateRequest vendor) {
         isNull(vendor);
-        UUID uuid = parseUUID(vendor.id());
-        var entity = vendorRepository.findById(uuid).orElseThrow(() -> new VendorNotFoundException(vendor.id()));
-        return vendorRepository.save(VendorParse.updateByDTO(entity, vendor));
+        return vendorRepository.save(VendorParse.updateByDTO(this.findById(vendor.id()), vendor));
     }
 
     @Override
     public void delete(String id) {
-        UUID uuid = parseUUID(id);
-        var entity = vendorRepository.findById(uuid).orElseThrow(() -> new VendorNotFoundException(id));
-        vendorRepository.delete(entity);
+        vendorRepository.delete(this.findById(id));
     }
 
     private UUID parseUUID(String id) {

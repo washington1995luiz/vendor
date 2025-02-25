@@ -1,6 +1,7 @@
 package br.com.washington.vendor.service.impl;
 
 import br.com.washington.vendor.dto.request.ProductCreateRequest;
+import br.com.washington.vendor.dto.request.ProductUpdateRequest;
 import br.com.washington.vendor.entities.Product;
 import br.com.washington.vendor.entities.Vendor;
 import br.com.washington.vendor.exception.InvalidUUIDException;
@@ -27,8 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(ProductCreateRequest product) {
-        Vendor vendor = vendorService.findById(product.vendor());
-        return productRepository.save(ProductParse.createByDTO(product, vendor));
+        return productRepository.save(ProductParse.createByDTO(product, vendorService.findById(product.vendor())));
     }
 
     @Override
@@ -48,8 +48,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(String id) {
-        var product = this.findById(id);
-        productRepository.delete(product);
+        productRepository.delete(this.findById(id));
+    }
+
+    @Override
+    public Product update(ProductUpdateRequest product) {
+        return productRepository.save(ProductParse.updateByDTO(this.findById(product.id()), product));
     }
 
     private UUID parseUUID(String id) {
