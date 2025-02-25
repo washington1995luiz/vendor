@@ -36,6 +36,7 @@ public class ProductController {
         return ProductParse.toFullDTO(productService.create(product));
     }
 
+
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     ProductFullResponse findById(@PathVariable(value = "id") @NotNull @NotBlank String id){
