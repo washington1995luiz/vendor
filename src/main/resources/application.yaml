@@ -7,7 +7,7 @@ spring:
     password: vend123
     driver-class-name: org.postgresql.Driver
     hikari:
-      auto-commit: false  # Para garantir suporte a rollback
+      auto-commit: true
 
   jpa:
     hibernate:
