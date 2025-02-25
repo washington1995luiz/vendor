@@ -4,6 +4,7 @@ import br.com.washington.vendor.dto.request.ProductCreateRequest;
 import br.com.washington.vendor.dto.response.ProductFullResponse;
 import br.com.washington.vendor.dto.response.ProductShortResponse;
 import br.com.washington.vendor.entities.Product;
+import br.com.washington.vendor.exception.ErrorMessagesEnum;
 import br.com.washington.vendor.service.ProductService;
 import br.com.washington.vendor.util.ProductParse;
 import br.com.washington.vendor.util.VendorParse;
@@ -60,22 +61,22 @@ public class ProductController {
                                                     @RequestParam(value = "size", defaultValue = "5") Integer size,
                                                     @RequestParam(value = "sort", defaultValue = "name") String sort,
                                                     @RequestParam(value = "direction", defaultValue = "desc") String direction){
-        if(size <= 0) size = 1;
-        if(!getFieldNames(sort)) sort = "name";
-        var setDirection = "asc".equalsIgnoreCase(direction) ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable pageable = PageRequest.of(page, size, Sort.by(setDirection, sort));
-        System.out.println("page: "+ page);
-        System.out.println("size: "+ size);
-        System.out.println("sort: "+ sort);
-        System.out.println("direction: "+ direction);
+        if(size <= 0) {
+            throw new IllegalArgumentException(ErrorMessagesEnum.INVALID_PAGE_SIZE.getMessage());
+        }
+        if(!isValidSortField(sort)) {
+            sort = "name";
+        }
 
+        Sort.Direction setDirection = Sort.Direction.fromOptionalString(direction).orElse(Sort.Direction.DESC);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(setDirection, sort));
 
         return ProductParse.toPagedModelShort(productService.findByVendorId(pageable, vendorId));
     }
 
-    private static boolean getFieldNames(String sort) {
+    private static boolean isValidSortField(String sort) {
         return Arrays.stream(Product.class.getDeclaredFields())
                 .map(Field::getName)
-                .toList().contains(sort);
+                .anyMatch(nameField -> nameField.equalsIgnoreCase(sort));
     }
 }
