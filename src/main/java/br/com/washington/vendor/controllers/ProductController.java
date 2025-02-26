@@ -8,7 +8,6 @@ import br.com.washington.vendor.entities.Product;
 import br.com.washington.vendor.exception.ErrorMessagesEnum;
 import br.com.washington.vendor.service.ProductService;
 import br.com.washington.vendor.util.ProductParse;
-import br.com.washington.vendor.util.VendorParse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
